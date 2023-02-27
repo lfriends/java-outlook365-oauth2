@@ -12,6 +12,7 @@ without a user interaction (MFA)
 * [Registering an app on Azure](#registering-an-app-on-azure)
 * [Authorizing access on the Exchange server](#authorizing-access-on-the-exchange-server)
 * [Updating the app parameters](#updating-the-app-parameters)
+* [Libs dependency][#libs-deps]
 * [Troubleshooting](#troubleshooting)
 * [Reference Documentation](#reference-documentation)
 
@@ -108,6 +109,40 @@ Open the "application.properties" file and update with your IDs:
 * **mail.oauth2.secret_value**: use the secret value (not the ID) genereted ad tep #1.6 - Eg: XUad94~M...
 * **mail.oauth2.application_client_id**: this the "Application (client) ID" visibile on the "overview" panel of the application
 * **mail.oauth2.direcotry_tenant_id**: this the "Directory (tenant) ID" visibile on the "overview" panel of the application
+
+
+
+## Libs Deps
+
+
+##### Maven POM
+```
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>msal4j</artifactId>
+    <version>1.10.1</version>
+</dependency>
+
+<dependency>
+    <groupId>com.sun.mail</groupId>
+    <artifactId>javax.mail</artifactId>
+    <version>1.6.2</version>
+</dependency>
+```	
+
+##### Sibgle Libs (Mininum()
+
+* accessors-smart-2.4.8.jar
+* activation-1.1.jar
+* asm-9.1.jar
+* content-type-2.1.jar
+* javax.mail-1.6.2.jar
+* jcip-annotations-1.0-1.jar
+* json-smart-2.4.8.jar
+* lang-tag-1.5.jar
+* msal4j-1.10.1.jar
+* nimbus-jose-jwt-9.9.3.jar
+* oauth2-oidc-sdk-9.7.jar
 
 
 
