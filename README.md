@@ -12,7 +12,7 @@ without a user interaction (MFA)
 * [Registering an app on Azure](#registering-an-app-on-azure)
 * [Authorizing access on the Exchange server](#authorizing-access-on-the-exchange-server)
 * [Updating the app parameters](#updating-the-app-parameters)
-* [Libs dependency][#libs-deps]
+* [Libs dependency](#libs-deps)
 * [Troubleshooting](#troubleshooting)
 * [Reference Documentation](#reference-documentation)
 
@@ -130,7 +130,7 @@ Open the "application.properties" file and update with your IDs:
 </dependency>
 ```	
 
-##### Sibgle Libs (Mininum()
+##### Sibgle Libs (Mininum)
 
 * accessors-smart-2.4.8.jar
 * activation-1.1.jar
