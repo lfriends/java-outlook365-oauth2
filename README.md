@@ -35,7 +35,7 @@ In order to successfully run this sample app you need to:
 ## Registering an app on Azure
 
 1. Sign in to the [Azure portal](https://portal.azure.com/)
-1. If you have more tentants, switch to the desired one
+1. If you have more tenants, switch to the desired one
 1. Open **Azure Active Directory**
 1. Click on **App registrations** on the left panel
 <br><br>
@@ -51,7 +51,7 @@ In order to successfully run this sample app you need to:
     * click **Authentication** on the left panel 
         * Add a platform: "Mobile and desktop" 
         * select: "https://login.microsoftonline.com/common/oauth2/nativeclient" 
-        * add a redirect URI, eg: "http://localhost" (wont be used) 
+        * add a redirect URI, e.g.: "http://localhost" (wont be used) 
         * click "Configure"
         
      * click **Certificates and secrets** 
@@ -70,7 +70,7 @@ In order to successfully run this sample app you need to:
              * Mail.Send (if you want to send)
              
          * click "Add permission"
-         * **DON'T FORGET** to click "Grand admin consent for ..." to activate the grants
+         * **DON'T FORGET** to click "Grant admin consent for ..." to activate the grants
 
         
         
@@ -105,17 +105,17 @@ as well described in this post
 
 Open the "application.properties" file and update with your IDs:
 
-* **mail.username**: is the email account you want to access - eg: john.doe@example.com
-* **mail.oauth2.secret_value**: use the secret value (not the ID) genereted ad tep #1.6 - Eg: XUad94~M...
-* **mail.oauth2.application_client_id**: this the "Application (client) ID" visibile on the "overview" panel of the application
-* **mail.oauth2.direcotry_tenant_id**: this the "Directory (tenant) ID" visibile on the "overview" panel of the application
+* **mail.username**: is the email account you want to access - e.g.: john.doe@example.com
+* **mail.oauth2.secret_value**: use the secret value (not the ID) generated at step #1.6 - e.g.: XUad94~M...
+* **mail.oauth2.application_client_id**: this the "Application (client) ID" visible on the "overview" panel of the application
+* **mail.oauth2.direcotry_tenant_id**: this the "Directory (tenant) ID" visible on the "overview" panel of the application
 
 
 
 ## Libs Deps
 
 
-##### Maven POM
+##### Maven POM.XML
 ```
 <dependency>
     <groupId>com.microsoft.azure</groupId>
@@ -130,7 +130,7 @@ Open the "application.properties" file and update with your IDs:
 </dependency>
 ```	
 
-##### Sibgle Libs (Mininum)
+##### Single Libs (if not using the POM.XML)
 
 * accessors-smart-2.4.8.jar
 * activation-1.1.jar
@@ -159,7 +159,7 @@ DEBUG IMAP: Can't load SASL authenticator
 
 verify you are using javaMail >= 1.6 
    
-and that you have correcly set all the mail properties, like:
+and that you have correctly set all the mail properties, like:
 
 > props.put("mail.imap.sasl.enable", "true");  
 > props.put("mail.imap.sasl.mechanisms", "XOAUTH2");  
@@ -172,7 +172,7 @@ Please note that in case you are connecting to "imaps"
 
 > Store store = session.getStore("imaps");  
 
-remember also to update all the **props** to **imaps** too 
+remember also to update all the **props** to **imaps** too: 
    
 > props.put("mail.imap**s**.sasl.enable", "true");  
 > props.put("mail.imap**s**.sasl.mechanisms", "XOAUTH2");   
@@ -186,9 +186,9 @@ remember also to update all the **props** to **imaps** too
 > AADSTS7000215: Invalid client secret provided Ensure the secret being sent in the request is the client secret value, not the client secret ID, for a secret added to app '*********'.
 ```
 	
-as the message is stating, ensure you are using the *SECRET VALUE* and not the *SECRET ID*
-Note that you can copy che *Secret value* only once, as it has been created. As you close che creation page, the *Secret value* will never be visible.
-In this case you will need to create d new *Secret value*
+as the message is stating: ensure you are using the *SECRET VALUE* and not the *SECRET ID*.  
+Note that you can copy the *Secret value* only at creation time. As you close the creation page, the *Secret value* will never be visible again.
+In case you missed it, you will need to create a new *Secret value*.
 
 
 ##### ERROR:  AUTHENTICATE failed
