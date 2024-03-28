@@ -2,8 +2,14 @@
 # Java Sample App to connect to outlook365 with OAuth2
 
 
-This project is an example on how make a **client-to-server** connection to **outlook365** (or any similar service) over IMAP using **OAUTH2** authentication
-without a user interaction (MFA)
+This project is an example on how make a **client-to-server** connection to **outlook365** (or any similar service) over IMAP using **OAUTH2** authentication without a user interaction (MFA).
+
+It requires some Azure configuration.
+
+The app connects to an INBOX to test the connection is valid.<br>
+It also:
+- prints out the number of messages 
+- possibility to save a message as an .eml file (see: saveMessageToFile() method)
 
 
 ## Table of Contents
