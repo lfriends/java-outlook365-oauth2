@@ -169,7 +169,7 @@ public class Application {
 
     public static void saveMessageToFile(Message msg, String filePath) {
         
-        System.out.println("=== saving mesate to: " + filePath);
+        System.out.println("=== saving message to: " + filePath);
         
         
         try {

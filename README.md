@@ -2,14 +2,16 @@
 # Java Sample App to connect to outlook365 with OAuth2
 
 
-This project is an example on how make a **client-to-server** connection to **outlook365** (or any similar service) over IMAP using **OAUTH2** authentication without a user interaction (MFA).
+This project is an example of how to make a **client-to-server** connection to **Outlook 365** (or any similar service) over IMAP using **OAuth2** authentication without user interaction (MFA).
 
 It requires some Azure configuration.
 
 The app connects to an INBOX to test the connection is valid.<br>
 It also:
 - prints out the number of messages 
-- possibility to save a message as an .eml file (see: saveMessageToFile() method)
+- save a message as an `.eml` file (see `saveMessageToFile()` method)
+
+> **Important:** Please note that there is no way to connect to the Azure/Exchange IMAP service unless you run the required authorization command(s) on the Exchange service via CLI (PowerShell), as explained in this doc at paragraph [Authorizing access on the Exchange server](#authorizing-access-on-the-exchange-server).
 
 
 ## Table of Contents
@@ -28,49 +30,48 @@ It also:
 
 In order to successfully run this sample app you need to:
 
-1. register a new app on the azure portal
+1. Register a new app on the Azure portal
 1. Authorize access on the Exchange server
 1. Fill up the [`application.properties`](src/main/resources/application.properties) file, by adding 
     * the email account
     * the tenant id
     * the application id
-    * the secret id  (OAuth2AppClientId, OAuth2AppClientSecret) by copying over from the keys section for your app.
-1.  git-clone this project: `git clone https://github.com/lfriends/java-outlook365-oauth2`
+    * the secret ID (`OAuth2AppClientId`, `OAuth2AppClientSecret`) by copying it from the keys section for your app
+1. Clone this project: `git clone https://github.com/lfriends/java-outlook365-oauth2`
 
  
 ## Registering an app on Azure
 
 1. Sign in to the [Azure portal](https://portal.azure.com/)
-1. If you have more tenants, switch to the desired one
+1. If you have multiple tenants, switch to the desired one
 1. Open **Azure Active Directory**
 1. Click on **App registrations** on the left panel
 <br><br>
 
 1. Add a **new registration**
-    1. set a name as you like (Il will be displayed on the access token info) 
+    1. Set any name you like (it will be displayed in the access token info)
     1. select "Accounts in any organizational directory" 
     1. click "Register"
 <br><br>
 
-1. Open up your newly create *App registration*
+1. Open your newly created *App registration*
 
     * click **Authentication** on the left panel 
         * Add a platform: "Mobile and desktop" 
         * select: "https://login.microsoftonline.com/common/oauth2/nativeclient" 
-        * add a redirect URI, e.g.: "http://localhost" (wont be used) 
+        * add a redirect URI, e.g.: "http://localhost" (this param won't be used)
         * click "Configure"
         
      * click **Certificates and secrets** 
         * New client secret
         * choose the name and duration
         * click "ADD"
-        * **VERY IMPORTANT:** note down the Secret "Value" because it wont be visible again
+        * **VERY IMPORTANT:** note down the Secret "Value" because it won't be visible again
         
-     * goto **App permission**
+     * go to **App permissions**
          * "Add permission"
          * select tab "APIs my organization uses" > search: "Office 365 Exchange Online" > select
 
-             * IMAP.AccessAsApp
              * IMAP.AccessAsApp
              * Mail.Read
              * Mail.Send (if you want to send)
@@ -84,9 +85,9 @@ In order to successfully run this sample app you need to:
  
 ## Authorizing access on the Exchange server
 
-this can **only** be done by powershell scripts on exchange
+This can **only** be done by PowerShell scripts on Exchange.
 
-1. connect to powershell console on exchange (Help on how to connect can be found [here](https://learn.microsoft.com/en-us/powershell/exchange/connect-to-exchange-online-powershell?view=exchange-ps) )
+1. Connect to the PowerShell console on Exchange (help on how to connect can be found [here](https://learn.microsoft.com/en-us/powershell/exchange/connect-to-exchange-online-powershell?view=exchange-ps)).
 1. Install ExchangeOnlineManagement
 
 ```
@@ -94,14 +95,14 @@ Install-Module -Name ExchangeOnlineManagement -allowprerelease Import-module Exc
 ```
 
 
-  3.Register Service Principal in Exchange
+3. Register Service Principal in Exchange
 
 ```
 New-ServicePrincipal -AppId <APPLICATION_ID> -ServiceId <OBJECT_ID> [-Organization <ORGANIZATION_ID>]   
 ```
 
-Make sure to use ObjectId from *enterprise applications* rather than object id of *application*
-as well described in this post 
+Make sure to use the ObjectId from *Enterprise applications* rather than the object ID of the *application*,
+as described in this post:
 [Exchange config: Make sure to use ObjectId from enterprise applications rather than object id of application ](https://stackoverflow.com/questions/74899182/how-to-read-my-outlook-mail-using-java-and-oauth2-0-with-application-regsitratio?answertab=scoredesc#tab-top)
 
 
@@ -113,8 +114,8 @@ Open the "application.properties" file and update with your IDs:
 
 * **mail.username**: is the email account you want to access - e.g.: john.doe@example.com
 * **mail.oauth2.secret_value**: use the secret value (not the ID) generated at step #1.6 - e.g.: XUad94~M...
-* **mail.oauth2.application_client_id**: this the "Application (client) ID" visible on the "overview" panel of the application
-* **mail.oauth2.direcotry_tenant_id**: this the "Directory (tenant) ID" visible on the "overview" panel of the application
+* **mail.oauth2.application_client_id**: this is the "Application (client) ID" visible on the "Overview" panel of the application
+* **mail.oauth2.directory_tenant_id**: this is the "Directory (tenant) ID" visible on the "Overview" panel of the application
 
 
 
@@ -207,14 +208,14 @@ In case you missed it, you will need to create a new *Secret value*.
 > javax.mail.AuthenticationFailedException: AUTHENTICATE failed.  
 ```
 
-You most probably have missed to set, or have set the wrong permissions over one of the followings:
+You most likely missed setting permissions, or set incorrect permissions, for one of the following:
 
-1. Make sure you have set the proper rights on the azure application configuration
-2. ensure you have ran the CLI commands to authorize the *application* to access the email folder requested (this can only be solved by powershells script on exchange) 
+1. Make sure you have set the proper rights on the Azure application configuration
+2. Ensure you have run the CLI commands to authorize the *application* to access the requested email folder (this can only be solved by a PowerShell script on Exchange)
 
-check this out [Application permissions .and. Exchange config](https://stackoverflow.com/questions/74899182/how-to-read-my-outlook-mail-using-java-and-oauth2-0-with-application-regsitratio?answertab=scoredesc#tab-top)
+Check this out: [Application permissions and Exchange config](https://stackoverflow.com/questions/74899182/how-to-read-my-outlook-mail-using-java-and-oauth2-0-with-application-regsitratio?answertab=scoredesc#tab-top)
 
-Please note that you need to wait up to **15 minutes** for these change to apply
+Please note that you need to wait up to **15 minutes** for these changes to apply.
 
 
 ## Reference Documentation
